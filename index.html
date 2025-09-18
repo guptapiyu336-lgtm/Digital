@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduAI — How AI is Transforming Education</title>
+  <meta name="description" content="An animated blog exploring how AI is reshaping learning — adaptive tutoring, assessment, accessibility, and more." />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef9ff',
+              100: '#d6f0ff',
+              200: '#aee0ff',
+              300: '#7bcbff',
+              400: '#46b1ff',
+              500: '#1793ff',
+              600: '#0b72d6',
+              700: '#085aa8',
+              800: '#0a4a86',
+              900: '#0c3e6e'
+            }
+          },
+          keyframes: {
+            floaty: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' }
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '200% 0' },
+              '100%': { backgroundPosition: '-200% 0' }
+            }
+          },
+          animation: {
+            floaty: 'floaty 6s ease-in-out infinite',
+            shimmer: 'shimmer 4s linear infinite'
+          },
+          boxShadow: {
+            glow: '0 0 0 1px rgba(255,255,255,0.08), 0 8px 30px rgba(23,147,255,0.25)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: dark; }
+    html, body { height: 100%; }
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+    /* subtle glass effect */
+    .glass { backdrop-filter: blur(8px); background: rgba(13, 18, 28, 0.55); }
+    /* gradient text utility */
+    .text-gradient { background: linear-gradient(90deg,#aee0ff,#7bcbff,#1793ff,#aee0ff); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 300% 100%; }
+    /* reveal transition base */
+    .reveal { transform: translateY(16px); opacity: 0; transition: opacity .8s ease, transform .8s ease; }
+    .reveal.visible { transform: translateY(0); opacity: 1; }
+    /* blog prose tweaks */
+    .prose strong { color: #e6f1ff; }
+  </style>
+</head>
+<body class="bg-[#070b12] text-slate-200 selection:bg-brand-500/40 selection:text-white">
+  <!-- Background Three.js Canvas -->
+  <canvas id="bg" class="fixed inset-0 -z-10"></canvas>
+  <div class="pointer-events-none fixed inset-0 -z-10" aria-hidden="true"
+       style="background: radial-gradient(1200px 600px at 70% 10%, rgba(23,147,255,.20), transparent 60%), radial-gradient(800px 400px at 20% 80%, rgba(14,165,233,.18), transparent 60%)"></div>
+
+  <!-- Nav -->
+  <header class="sticky top-0 z-30 border-b border-white/5 bg-[#070b12]/70 backdrop-blur">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
+      <a href="#home" class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-2xl bg-gradient-to-br from-brand-400 to-brand-700 shadow-glow animate-floaty"></div>
+        <span class="text-lg font-bold tracking-tight">EduAI</span>
+      </a>
+      <ul class="hidden gap-6 md:flex">
+        <li><a class="hover:text-white/90" href="#posts">Posts</a></li>
+        <li><a class="hover:text-white/90" href="#impact">Impact</a></li>
+        <li><a class="hover:text-white/90" href="#timeline">Timeline</a></li>
+        <li><a class="hover:text-white/90" href="#subscribe">Subscribe</a></li>
+      </ul>
+      <a href="#subscribe" class="pointer-events-auto rounded-2xl bg-white/10 px-4 py-2 text-sm font-semibold hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-brand-500">Get updates</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="relative mx-auto max-w-7xl px-4 pt-16 pb-8 md:pt-24">
+    <div class="grid items-center gap-10 md:grid-cols-2">
+      <div class="reveal">
+        <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">
+          <span class="text-gradient animate-shimmer">How AI is Transforming Education</span>
+        </h1>
+        <p class="mt-5 max-w-xl text-slate-300">From adaptive tutors to automated feedback and multimodal tools, AI is reshaping how we learn, teach, and assess—at scale and with personalization.</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#posts" class="rounded-2xl bg-brand-500 px-5 py-2.5 font-semibold text-white shadow-glow hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-400">Explore Posts</a>
+          <a href="#impact" class="rounded-2xl border border-white/10 px-5 py-2.5 font-semibold hover:bg-white/5">See Impact</a>
+        </div>
+        <div class="mt-8 grid grid-cols-3 gap-4 text-center">
+          <div class="glass rounded-2xl p-4">
+            <div class="text-2xl font-bold counter" data-target="120">0</div>
+            <div class="text-xs text-slate-400">Adaptive models</div>
+          </div>
+          <div class="glass rounded-2xl p-4">
+            <div class="text-2xl font-bold counter" data-target="65">0</div>
+            <div class="text-xs text-slate-400">Countries piloting</div>
+          </div>
+          <div class="glass rounded-2xl p-4">
+            <div class="text-2xl font-bold counter" data-target="98">0</div>
+            <div class="text-xs text-slate-400">Student satisfaction</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="glass relative overflow-hidden rounded-3xl border border-white/5 p-6 shadow-glow">
+          <div class="mb-4 flex items-center gap-2">
+            <span class="h-3 w-3 rounded-full bg-emerald-400"></span>
+            <span class="h-3 w-3 rounded-full bg-amber-400"></span>
+            <span class="h-3 w-3 rounded-full bg-rose-400"></span>
+          </div>
+          <pre class="scrollbar-thin max-h-80 overflow-auto rounded-xl bg-black/30 p-4 text-sm text-slate-200"><code>// AI Tutor: instant feedback
+function explain(step) {
+  return `Because of ${step}, try this next...`;
+}
+
+const hint = explain('your approach to factoring');
+console.log(hint);
+</code></pre>
+          <p class="mt-4 text-sm text-slate-300">Snippets like these power guidance, grading aids, and creative projects—right where students learn.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Posts -->
+  <section id="posts" class="mx-auto max-w-7xl px-4 py-12">
+    <div class="reveal">
+      <h2 class="text-2xl font-bold">Latest posts</h2>
+      <p class="mt-1 text-slate-400">Deep dives and quick reads about real classrooms using AI.</p>
+    </div>
+    <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <!-- Card 1 -->
+      <article class="reveal group glass rounded-3xl border border-white/5 p-4 transition hover:shadow-glow">
+        <div class="relative h-44 w-full overflow-hidden rounded-2xl bg-gradient-to-br from-brand-400/40 to-brand-700/40">
+          <svg viewBox="0 0 200 200" class="absolute inset-0 h-full w-full opacity-70">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#7bcbff"/>
+                <stop offset="100%" stop-color="#1793ff"/>
+              </linearGradient>
+            </defs>
+            <circle cx="60" cy="80" r="40" fill="url(#g1)"></circle>
+            <circle cx="140" cy="120" r="50" fill="url(#g1)" opacity=".6"></circle>
+          </svg>
+        </div>
+        <div class="mt-4 space-y-2">
+          <h3 class="text-lg font-semibold group-hover:underline">Adaptive Tutoring: Personalized Paths</h3>
+          <p class="text-sm text-slate-400">How transformer-based systems adjust difficulty, pacing, and hints to each learner.</p>
+          <a href="#" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-300 hover:text-brand-200">Read more
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+      <!-- Card 2 -->
+      <article class="reveal group glass rounded-3xl border border-white/5 p-4 transition hover:shadow-glow">
+        <div class="relative h-44 w-full overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-400/30 to-teal-700/40">
+          <div class="absolute -left-8 -top-8 h-40 w-40 rounded-full bg-white/10 blur-2xl"></div>
+        </div>
+        <div class="mt-4 space-y-2">
+          <h3 class="text-lg font-semibold group-hover:underline">Assessment at Scale</h3>
+          <p class="text-sm text-slate-400">Rubrics, short-answer grading, and feedback loops that save teachers hours every week.</p>
+          <a href="#" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-300 hover:text-brand-200">Read more
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+      <!-- Card 3 -->
+      <article class="reveal group glass rounded-3xl border border-white/5 p-4 transition hover:shadow-glow">
+        <div class="relative h-44 w-full overflow-hidden rounded-2xl bg-gradient-to-br from-violet-400/30 to-indigo-700/40">
+          <div class="absolute inset-0 animate-floaty">
+            <svg viewBox="0 0 200 200" class="h-full w-full opacity-70">
+              <rect x="30" y="30" width="60" height="60" rx="12" fill="white" opacity=".08"/>
+              <rect x="110" y="110" width="60" height="60" rx="12" fill="white" opacity=".08"/>
+            </svg>
+          </div>
+        </div>
+        <div class="mt-4 space-y-2">
+          <h3 class="text-lg font-semibold group-hover:underline">Accessibility Superpowers</h3>
+          <p class="text-sm text-slate-400">Live captioning, translation, and multimodal explanations make learning more inclusive.</p>
+          <a href="#" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-300 hover:text-brand-200">Read more
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+      <!-- Card 4 -->
+      <article class="reveal group glass rounded-3xl border border-white/5 p-4 transition hover:shadow-glow">
+        <div class="relative h-44 w-full overflow-hidden rounded-2xl bg-gradient-to-br from-fuchsia-400/30 to-rose-700/40"></div>
+        <div class="mt-4 space-y-2">
+          <h3 class="text-lg font-semibold group-hover:underline">Teacher Copilots</h3>
+          <p class="text-sm text-slate-400">From lesson planning to differentiation, AI assistants amplify teacher creativity.</p>
+          <a href="#" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-300 hover:text-brand-200">Read more
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+      <!-- Card 5 -->
+      <article class="reveal group glass rounded-3xl border border-white/5 p-4 transition hover:shadow-glow">
+        <div class="relative h-44 w-full overflow-hidden rounded-2xl bg-gradient-to-br from-amber-400/30 to-orange-700/40"></div>
+        <div class="mt-4 space-y-2">
+          <h3 class="text-lg font-semibold group-hover:underline">Ethics & Safety</h3>
+          <p class="text-sm text-slate-400">Bias, privacy, and responsible deployment in schools and universities.</p>
+          <a href="#" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-300 hover:text-brand-200">Read more
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+      <!-- Card 6 -->
+      <article class="reveal group glass rounded-3xl border border-white/5 p-4 transition hover:shadow-glow">
+        <div class="relative h-44 w-full overflow-hidden rounded-2xl bg-gradient-to-br from-lime-400/30 to-emerald-700/40"></div>
+        <div class="mt-4 space-y-2">
+          <h3 class="text-lg font-semibold group-hover:underline">Student Voice</h3>
+          <p class="text-sm text-slate-400">What learners say about AI tutors, study companions, and creativity tools.</p>
+          <a href="#" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-300 hover:text-brand-200">Read more
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Impact -->
+  <section id="impact" class="mx-auto max-w-7xl px-4 py-12">
+    <div class="reveal">
+      <h2 class="text-2xl font-bold">Impact in the classroom</h2>
+      <p class="mt-1 text-slate-400">Measured gains from pilots and published studies.</p>
+    </div>
+    <div class="mt-8 grid gap-6 md:grid-cols-3">
+      <div class="reveal glass rounded-3xl border border-white/5 p-6">
+        <div class="text-4xl font-extrabold text-white">+27%</div>
+        <p class="mt-2 text-sm text-slate-400">Average improvement on practice problem accuracy with hint-on-demand.</p>
+      </div>
+      <div class="reveal glass rounded-3xl border border-white/5 p-6">
+        <div class="text-4xl font-extrabold text-white">-42%</div>
+        <p class="mt-2 text-sm text-slate-400">Reduction in teacher grading time using rubric-aligned feedback generators.</p>
+      </div>
+      <div class="reveal glass rounded-3xl border border-white/5 p-6">
+        <div class="text-4xl font-extrabold text-white">3×</div>
+        <p class="mt-2 text-sm text-slate-400">Increase in revision cycles when students have instant formative feedback.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section id="timeline" class="mx-auto max-w-7xl px-4 py-12">
+    <div class="reveal">
+      <h2 class="text-2xl font-bold">Milestones</h2>
+      <p class="mt-1 text-slate-400">Key moments in AI + education.</p>
+    </div>
+    <ol class="mt-8 space-y-6 border-l border-white/10 pl-6">
+      <li class="reveal relative">
+        <span class="absolute -left-[9px] top-1.5 h-4 w-4 rounded-full bg-brand-500 shadow-glow"></span>
+        <h3 class="font-semibold">2012 — Deep Learning Resurgence</h3>
+        <p class="text-sm text-slate-400">Moocs & auto-graded assignments scale globally.</p>
+      </li>
+      <li class="reveal relative">
+        <span class="absolute -left-[9px] top-1.5 h-4 w-4 rounded-full bg-brand-500 shadow-glow"></span>
+        <h3 class="font-semibold">2018 — Transformers Everywhere</h3>
+        <p class="text-sm text-slate-400">Better language understanding unlocks tutoring and assessment.
+        </p>
+      </li>
+      <li class="reveal relative">
+        <span class="absolute -left-[9px] top-1.5 h-4 w-4 rounded-full bg-brand-500 shadow-glow"></span>
+        <h3 class="font-semibold">2023+ — Multimodal AI</h3>
+        <p class="text-sm text-slate-400">Vision & audio open up handwriting help, diagrams, and accessibility.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- Subscribe -->
+  <section id="subscribe" class="mx-auto max-w-3xl px-4 py-16">
+    <div class="reveal glass rounded-3xl border border-white/5 p-8 shadow-glow">
+      <h2 class="text-2xl font-bold">Subscribe for new posts</h2>
+      <p class="mt-1 text-slate-400">One email per month. No spam, unsubscribe anytime.</p>
+      <form class="mt-6 grid gap-3 sm:grid-cols-[1fr_auto]" onsubmit="event.preventDefault(); subscribe();">
+        <label class="sr-only" for="email">Email</label>
+        <input id="email" type="email" required placeholder="you@university.edu" class="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500" />
+        <button class="rounded-2xl bg-brand-500 px-6 py-3 font-semibold text-white hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-400">Join</button>
+      </form>
+      <p id="sub-msg" class="mt-3 text-sm text-emerald-400" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5 py-8 text-center text-xs text-slate-500">
+    <p>© <span id="year"></span> EduAI — A blog about AI in education.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module">
+    // ====== THREE.JS BACKDROP ======
+    import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+    import { OrbitControls } from 'https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+
+    const canvas = document.getElementById('bg');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 0, 36);
+
+    // Soft gradient fog for depth
+    scene.fog = new THREE.FogExp2(0x06101b, 0.018);
+
+    // Particles in a sphere
+    const particles = new THREE.BufferGeometry();
+    const count = 1800;
+    const positions = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      const r = 18 * Math.cbrt(Math.random()); // more points near center
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      positions[i * 3 + 2] = r * Math.cos(phi);
+    }
+    particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const pMaterial = new THREE.PointsMaterial({ size: 0.06, color: 0x1793ff, transparent: true, opacity: 0.9 });
+    const points = new THREE.Points(particles, pMaterial);
+    scene.add(points);
+
+    // Wireframe knot
+    const knotGeo = new THREE.TorusKnotGeometry(6, 0.6, 220, 40);
+    const knotMat = new THREE.MeshBasicMaterial({ color: 0x7bcbff, wireframe: true, transparent: true, opacity: 0.35 });
+    const knot = new THREE.Mesh(knotGeo, knotMat);
+    scene.add(knot);
+
+    // Lights
+    const light1 = new THREE.PointLight(0x1793ff, 12, 80);
+    light1.position.set(10, 10, 10);
+    scene.add(light1);
+    const light2 = new THREE.PointLight(0x0ea5e9, 10, 80);
+    light2.position.set(-10, -6, -10);
+    scene.add(light2);
+
+    // Controls (disabled zoom for subtle parallax)
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.6;
+
+    function resize() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Mouse parallax
+    let targetX = 0, targetY = 0;
+    window.addEventListener('pointermove', (e) => {
+      targetX = (e.clientX / window.innerWidth - 0.5) * 0.3;
+      targetY = (e.clientY / window.innerHeight - 0.5) * 0.3;
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      // gentle rotations
+      points.rotation.y += 0.0008;
+      knot.rotation.x += 0.0009;
+      knot.rotation.y += 0.0012;
+      // follow the mouse
+      camera.position.x += (targetX * 20 - camera.position.x) * 0.02;
+      camera.position.y += (-targetY * 10 - camera.position.y) * 0.02;
+      camera.lookAt(0, 0, 0);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+
+  <script>
+    // ====== UTILITIES ======
+    // Year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Smooth reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach((el) => io.observe(el));
+
+    // Animated counters
+    function startCounters() {
+      document.querySelectorAll('.counter').forEach((el) => {
+        const target = parseInt(el.dataset.target, 10);
+        let current = 0;
+        const duration = 1600; // ms
+        const start = performance.now();
+        function tick(now) {
+          const p = Math.min(1, (now - start) / duration);
+          current = Math.round(target * (0.2 + 0.8 * (1 - Math.cos(p * Math.PI)) / 2));
+          el.textContent = current.toLocaleString();
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    }
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          startCounters();
+          counterObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.4 });
+    counterObserver.observe(document.querySelector('#home'));
+
+    // Subscribe demo
+    function subscribe() {
+      const email = document.getElementById('email').value.trim();
+      const msg = document.getElementById('sub-msg');
+      if (!email) return;
+      msg.textContent = `Thanks! A confirmation was sent to ${email}.`;
+    }
+    window.subscribe = subscribe;
+  </script>
+</body>
+</html>
